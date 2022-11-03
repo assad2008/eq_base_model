@@ -1,0 +1,25 @@
+{
+    "name": "assad2008/eq-base-model",
+    "description": "Eloquent custom base model",
+    "type": "library",
+    "keywords": ["php", "function", "library"],
+    "homepage": "https://github.com/assad2008/eq_base_model",
+    "license": "MIT",
+    "authors": [
+	    {
+	        "name": "Yee",
+	        "email": "rlk002@gmail.com",
+	        "homepage": "https://wj.pe",
+	        "role": "Developer"
+	    }
+	],
+    "support": {
+        "email": "rlk002@gmail.com"
+    },
+    "require": {
+        "php": "^5.4 || ^7.0",
+    },
+    "autoload":{
+    	"psr-4": ["src/"]
+    }
+}
