@@ -1,20 +1,19 @@
 <?php
 
 /**
- * @Filename:  eqBaseModel.php
+ * @Filename:  BaseModel.php
  * @Author: assad
  * @Date:   2022-11-03 09:32:25
  * @Synopsis:
  * @Version: 1.0
  * @Last Modified by:   assad
- * @Last Modified time: 2022-11-03 09:36:40
+ * @Last Modified time: 2022-11-14 11:53:02
  * @Email: rlk002@gmail.com
  */
 
 namespace EqBaseModel;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
-use Yaf\Registry;
 
 /**
  * belongsto BaseModel.php
@@ -329,9 +328,9 @@ class BaseModel extends EloquentModel {
             foreach ($query as $key => $value) {
                 $data[] = (array) $value;
             }
-            $data = json_decode(jsonEncode($data), 1);
+            $data = json_decode(json_encode($data), 1);
         }
-        return $data ?: [];
+        return $data;
     }
 
     /**
@@ -353,7 +352,7 @@ class BaseModel extends EloquentModel {
 
     /**
      * belongsto BaseModel.php
-     * 缓存实例
+     * 缓存实例，如果没有，则返回空对象
      *
      * @return     object  ( description_of_the_return_value )
      *
@@ -361,7 +360,10 @@ class BaseModel extends EloquentModel {
      * @since      2019-07-09T16:09
      */
     public static function cache() {
-        return Registry::get('cache') ?: object();
+        if (!class_exists('Yaf\Registry')) {
+            return object();
+        }
+        return \Yaf\Registry::get('cache') ?: object();
     }
 
     /**
@@ -374,7 +376,10 @@ class BaseModel extends EloquentModel {
      * @since      2019-08-20T15:11
      */
     public static function config() {
-        return Registry::get('di')['config'] ?: [];
+        if (!class_exists('Yaf\Registry')) {
+            return [];
+        }
+        return \Yaf\Registry::get('di')['config'] ?: [];
     }
 
     /**
