@@ -7,7 +7,7 @@
  * @Synopsis:
  * @Version: 1.0
  * @Last Modified by:   assad
- * @Last Modified time: 2022-11-14 11:53:02
+ * @Last Modified time: 2023-09-07 17:34:34
  * @Email: rlk002@gmail.com
  */
 
@@ -110,7 +110,7 @@ class BaseModel extends EloquentModel {
      * @author     assad
      * @since      2020-04-07T15:19
      */
-    public static function getRows($where = [], $order = [], $limit = 0) {
+    public static function getRows($where = [], $order = [], $limit = 0, $colName = []) {
         if (!$where) {
             $rowsObj = self::whereRaw('1=1');
         } else {
@@ -140,6 +140,9 @@ class BaseModel extends EloquentModel {
         if ($limit) {
             $rowsObj->take($limit);
         }
+        if ($colName) {
+            $rowsObj->select($colName);
+        }
         $rowsObj = $rowsObj->get();
         if ($rowsObj) {
             $rows = $rowsObj->toArray();
@@ -163,7 +166,7 @@ class BaseModel extends EloquentModel {
      * @author     assad
      * @since      2019-08-23T15:08
      */
-    public static function getList($where = [], $order = [], $start = 0, $perpage = 10) {
+    public static function getList($where = [], $order = [], $start = 0, $perpage = 10, $colName = []) {
         if (!$where) {
             $lists = self::whereRaw('1=1');
         } else {
@@ -195,6 +198,9 @@ class BaseModel extends EloquentModel {
             $lists->orderBy($key, $val);
         }
         $lists->skip($start)->take($perpage);
+        if ($colName) {
+            $lists->select($colName);
+        }
         $lists = $lists->get();
         if ($lists) {
             return $lists->toArray();
